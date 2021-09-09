@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import web.DAO.model.Car;
 import web.DAO.service.CarService;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -22,12 +21,8 @@ public class CarsController {
     @GetMapping ("/cars")
     public String GetCars(ModelMap model, @RequestParam(value = "count", required = false) Integer count) {
 
-        List<String> listCars = new LinkedList<>();
         Integer localCount = ((count == null) || (count >= 5)) ? 5 : count;
-
-        for(Car car : carService.getCars(localCount)) {
-            listCars.add(car.toString());
-        }
+        List<Car> listCars = carService.getCars(localCount);
         model.addAttribute("Cars", listCars);
         return "cars";
     }
